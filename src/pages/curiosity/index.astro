@@ -1,0 +1,32 @@
+---
+import Container from 'src/components/atoms/Container/Container.astro';
+import StandardLayout from 'src/components/layouts/StandardLayout/StandardLayout.astro'
+
+import {CuriosityFrontmatter} from 'src/models/curiosity'
+
+const articles = await Astro.glob<CuriosityFrontmatter>('./*.mdx')
+---
+
+<StandardLayout>
+  <Container>
+    <p class="text-sm">
+      <a href="/">⟵ Back to Home</a>
+    </p>
+
+    <div class="prose prose-slate mt-4 dark:prose-invert">
+      <ul>
+        {articles.map(article => (
+          <li>
+            <a href={article.url}>
+              {article.frontmatter.draft ? (
+                <span class="italic">[WIP] {article.frontmatter.title}</span>
+              ): (
+                <span>{article.frontmatter.title}</span>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Container>
+</StandardLayout>

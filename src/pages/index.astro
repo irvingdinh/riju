@@ -1,15 +1,16 @@
 ---
+import Container from "src/components/atoms/Container/Container.astro";
+import StandardLayout from 'src/components/layouts/StandardLayout/StandardLayout.astro'
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Irving Dinh</title>
-	</head>
-	<body class="font-sans antialiased">
-    <p class="p-4">Lorem ipsum dolor sit amet</p>
-	</body>
-</html>
+<StandardLayout>
+  <Container>
+    <div class="prose prose-slate dark:prose-invert">
+      <ul>
+        <li>
+          <a href="/curiosity">Curiosity</a>
+        </li>
+      </ul>
+    </div>
+  </Container>
+</StandardLayout>

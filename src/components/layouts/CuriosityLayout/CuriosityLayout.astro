@@ -1,0 +1,24 @@
+---
+import Container from 'src/components/atoms/Container/Container.astro'
+import StandardLayout from 'src/components/layouts/StandardLayout/StandardLayout.astro'
+
+const {frontmatter} = Astro.props;
+---
+
+<StandardLayout>
+  <Container>
+    <p class="text-sm">
+      <a href="/curiosity">⟵ Back to Curiosity</a>
+    </p>
+
+    <div class="mt-16">
+      <h2 class="font-semibold text-5xl">
+        {frontmatter.title}
+      </h2>
+
+      <div class="prose prose-slate mt-8 max-w-none dark:prose-invert">
+        <slot/>
+      </div>
+    </div>
+  </Container>
+</StandardLayout>
