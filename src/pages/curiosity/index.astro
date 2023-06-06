@@ -13,16 +13,12 @@ const articles = await Astro.glob<CuriosityFrontmatter>('./*.mdx')
       <a href="/">⟵ Back to Home</a>
     </p>
 
-    <div class="prose prose-slate mt-4 dark:prose-invert">
+    <div class="prose mt-4 dark:prose-invert">
       <ul>
         {articles.map(article => (
           <li>
             <a href={article.url}>
-              {article.frontmatter.draft ? (
-                <span class="italic">[WIP] {article.frontmatter.title}</span>
-              ): (
-                <span>{article.frontmatter.title}</span>
-              )}
+              {article.frontmatter.title}
             </a>
           </li>
         ))}
