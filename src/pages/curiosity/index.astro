@@ -4,7 +4,7 @@ import StandardLayout from 'src/components/layouts/StandardLayout/StandardLayout
 
 import {CuriosityFrontmatter} from 'src/models/curiosity'
 
-const articles = await Astro.glob<CuriosityFrontmatter>('./*.mdx')
+const articles = await Astro.glob<CuriosityFrontmatter>('./**/*.mdx')
 ---
 
 <StandardLayout>

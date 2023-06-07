@@ -1,0 +1,94 @@
+---
+layout: src/components/layouts/CuriosityLayout/CuriosityLayout.astro
+title: "LeetCode - My take on `Two Sum`"
+---
+
+### Description
+
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+You can return the answer in any order.
+
+**Example 1:**
+
+```
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+```
+
+**Example 2:**
+
+```
+Input: nums = [3,2,4], target = 6
+Output: [1,2]
+```
+
+**Example 3:**
+
+```
+Input: nums = [3,3], target = 6
+Output: [0,1]
+```
+
+**Constraints:**
+
+- `2 <= nums.length <= 104`
+- `-10^9 <= nums[i] <= 10^9`
+- `-10^9 <= target <= 10^9`
+- Only one valid answer exists.
+
+### Possible Solutions
+
+There are a number of approaches to solve this problem, each with a different time and space complexity. Here are a few
+solutions from the least optimized to the most optimized:
+
+1. **Brute Force:** This approach involves using two nested loops to iterate over the input array and find the two
+numbers that sum to the target. This is the least efficient solution because it has a time complexity of O(n^2), where n
+is the length of the array, and a space complexity of O(1).
+
+2. **Two-Pass Hash Table:** First, we iterate through the input array, storing each element and its index in a hash
+table. Then, we make a second pass through the array, and for each element, we check if the complement (target - current
+element) exists in our hash table. If it does, we return the indices of the current element and its complement. This
+approach improves upon the brute force method by trading space for time: it has a time complexity of O(n) and a space
+complexity of O(n).
+
+3. **Sorting and Two Pointers:** In this approach, we first sort the array, then we initialize two pointers, one at the
+start of the array and the other at the end. We move the pointers inward until we find the two numbers that add up to the
+target. While this approach also has a time complexity of O(n log n) due to the sorting operation and space complexity of
+O(1), it requires modifying the input array and doesn't allow us to return the original indices of the numbers.
+
+4. **One-Pass Hash Table:** This is the most efficient approach. As we iterate through the array, we check if each
+element's complement (target - current element) already exists in our hash table. If it does, we return the indices of
+the current element and its complement. If not, we insert the current element into the hash table. This approach has a
+time complexity of O(n) and a space complexity of O(n), like the two-pass hash table, but it only requires one pass
+through the array.
+
+In terms of both time and space complexity, the one-pass hash table approach is generally considered the most optimized
+solution for this problem.
+
+### My Solution in TypeScript
+
+```
+function twoSum(nums: number[], target: number): number[] {
+    const numToPos: Record<number, number> = {}
+
+    for (let x = 0; x < nums.length; x++) {
+        const num = nums[x]
+        const delta = target - num
+
+        if (numToPos[delta] != undefined) {
+            return [x, numToPos[delta]]
+        }
+
+        numToPos[num] = x
+    }
+};
+```
+
+**Result:**
+
+- Runtime: 74 ms, beats **62.34%**.
+- Memory: 45 MB, beats **55.24%**.
