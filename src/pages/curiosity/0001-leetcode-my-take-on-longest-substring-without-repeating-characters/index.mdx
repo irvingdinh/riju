@@ -1,0 +1,126 @@
+---
+layout: src/components/layouts/CuriosityLayout/CuriosityLayout.astro
+title: 'LeetCode - My take on "Longest Substring Without Repeating Characters"'
+---
+
+### Description
+
+Given a string `s`, find the length of the **longest substring** without repeating characters.
+
+**Example 1:**
+
+```
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
+```
+
+**Example 2:**
+
+```
+Input: s = "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+```
+
+**Example 3:**
+
+```
+Input: s = "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3.
+Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+```
+
+**Constraints:**
+
+- `0 <= s.length <= 5 * 10^4`
+- `s` consists of English letters, digits, symbols and spaces.
+
+### Possible Solutions
+
+Here are the three potential solutions to this problem, ranked from least to most optimized:
+
+#### Brute Force
+
+In this approach, you'd generate all possible substrings of the input string and for each substring, check whether it contains any duplicate characters. The longest substring without any repeating characters would be your answer.
+
+* **Time Complexity:** `O(n^3)`, as there are `n(n+1)/2` substrings, and we're checking each one for duplicate characters which takes `O(n)` time.
+* **Space Complexity:** `O(min(n, m))` for using a set or a hash table, where `n` is the size of the string and `m` is the size of the charset/alphabet.
+
+#### Optimized Brute Force - Sliding Window Approach
+
+The sliding window approach aims to achieve a more efficient solution by only traversing the string once. It works by maintaining a "window" of characters in the string and "sliding" it along the string.
+
+We start with an empty window at the beginning of the string. The window is defined by two pointers (often labeled "left" and "right"), initially both at the start of the string. The idea is to keep expanding this window to the right by moving the "right" pointer, until you encounter a repeating character.
+
+Here's how the algorithm works:
+
+1. Start with an empty set (or hashmap) and add the first character of the string to it.
+2. Start moving the "right" pointer one character at a time to the right, adding each new character to the set, as long as the character is not already in the set.
+3. When you encounter a character that is already in the set (a repeating character), this means the current window contains all unique characters. You can calculate its length to see if it's the longest so far.
+4. To continue searching for a longer substring, you must shrink the window from the left to exclude the repeating character. This is done by moving the "left" pointer to the right and removing the character pointed by "left" pointer from the set.
+5. Repeat steps 2 to 4, until the "right" pointer has moved through all characters in the string. The maximum length recorded during these steps would be the length of the longest substring without repeating characters.
+
+With this approach, each character in the string could potentially be visited twice (once by the right pointer and once by the left pointer), giving a time complexity of `O(2n)` which simplifies to `O(n)`, a significant improvement over the brute force approach.
+
+* **Time Complexity:** `O(2n) = O(n)`, in the worst case each character will be visited twice by the right and left pointer.
+* **Space Complexity:** `O(min(n, m))`, for using a set or a hash table, where `n` is the size of the string and `m` is the size of the charset/alphabet.
+
+#### Optimized Sliding Window Approach
+
+This is an enhanced version of the Sliding Window Approach, which makes it possible to solve the problem in a single pass (each character is visited only once).
+
+Like the basic Sliding Window Approach, this technique maintains a window of non-repeating characters. However, it optimizes the process by skipping over the repeated characters in one go, rather than shrinking the window one character at a time.
+
+Here's a detailed breakdown of the algorithm:
+
+1. Start with an empty hashmap (or a similar data structure that allows you to check the presence of a character and its latest position).
+2. Iterate over the string with the "right" pointer, adding each character and its index into the hashmap.
+3. If you encounter a character that is already in the hashmap (a repeating character), this means the current substring contains duplicate characters.
+4. Instead of shrinking the window one character at a time (as in the basic sliding window approach), you can directly move the "left" pointer to the position right after the repeated character's previous occurrence. But here's a key point: you only move the "left" pointer forward, not backward. If the "left" pointer's current position is greater than the repeated character's previous occurrence, you don't move the "left" pointer.
+5. You keep track of the longest substring without repeating characters you've encountered so far, and update the maximum length if the current substring is longer.
+
+This optimized sliding window approach enhances the basic sliding window technique by skipping over sections of the string, reducing unnecessary operations. Each character is visited only once by the "right" pointer, resulting in a linear time complexity of `O(n)`.
+
+* **Time Complexity:** `O(n)`, each character is visited once.
+* **Space Complexity:** `O(min(n, m))`, for using a map or a hash table to keep track of characters and their indices, where `n` is the size of the string and `m` is the size of the charset/alphabet.
+
+### My Take in TypeScript
+
+```
+function lengthOfLongestSubstring(s: string): number {
+    if (!s.length) {
+        return 0
+    }
+
+    const posOfChars: Record<string, number> = {}
+
+    let longest = 1
+    let leftPointer = 0
+    let rightPointer = 0
+
+    for (rightPointer = 0; rightPointer < s.length; rightPointer++) {
+        const char = s[rightPointer]
+        const posOfChar = posOfChars[char]
+
+        if (posOfChar >= leftPointer) {
+            leftPointer = posOfChar + 1
+        }
+
+        const currentLength = rightPointer - leftPointer + 1
+        if (currentLength > longest) {
+            longest = currentLength
+        }
+
+        posOfChars[char] = rightPointer
+    }
+
+    return longest
+};
+```
+
+**Result:**
+
+- Runtime: 85 ms, beats **75.65%**.
+- Memory: 49 MB, beats **46.33%**.
