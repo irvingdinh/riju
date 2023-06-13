@@ -1,4 +1,5 @@
 ---
+import ArrowLongLeftIcon from "src/components/atoms/Icons/ArrowLongLeftIcon.astro";
 import Container from 'src/components/atoms/Container/Container.astro';
 import StandardLayout from 'src/components/layouts/StandardLayout/StandardLayout.astro'
 
@@ -10,7 +11,13 @@ const articles = await Astro.glob<CuriosityFrontmatter>('./**/*.mdx')
 <StandardLayout>
   <Container>
     <p class="text-sm">
-      <a href="/">⟵ Back to Home</a>
+      <a class="flex items-center" href="/">
+        <ArrowLongLeftIcon class="w-6 h-6 mr-2"/>
+
+        <span>
+          Back to Home
+        </span>
+      </a>
     </p>
 
     <div class="prose mt-4 dark:prose-invert">

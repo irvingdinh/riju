@@ -1,4 +1,5 @@
 ---
+import ArrowLongLeftIcon from "src/components/atoms/Icons/ArrowLongLeftIcon.astro";
 import Container from 'src/components/atoms/Container/Container.astro'
 import StandardLayout from 'src/components/layouts/StandardLayout/StandardLayout.astro'
 
@@ -8,7 +9,13 @@ const {frontmatter} = Astro.props;
 <StandardLayout>
   <Container>
     <p class="text-sm">
-      <a href="/curiosity">⟵ Back to Curiosity</a>
+      <a class="flex items-center" href="/curiosity">
+        <ArrowLongLeftIcon class="w-6 h-6 mr-2"/>
+
+        <span>
+          Back to Curiosity
+        </span>
+      </a>
     </p>
 
     <div class="mt-16">
