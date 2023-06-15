@@ -1,0 +1,88 @@
+---
+layout: src/components/layouts/CuriosityLayout/CuriosityLayout.astro
+title: 'LeetCode - My take on "Valid Parentheses"'
+---
+
+### Description
+
+Given a string s containing just the characters `(`, `)`, `{`, `}`, `[` and `]`, determine if the input string is valid.
+
+An input string is valid if:
+
+* Open brackets must be closed by the same type of brackets.
+* Open brackets must be closed in the correct order.
+* Every close bracket has a corresponding open bracket of the same type.
+
+**Example 1:**
+
+```
+Input: s = "()"
+Output: true
+```
+
+**Example 2:**
+
+```
+Input: s = "()[]{}"
+Output: true
+```
+
+**Example 3:**
+
+```
+Input: s = "(]"
+Output: false
+```
+
+**Constraints:**
+
+* `1 <= s.length <= 10^4`
+* `s` consists of parentheses only `()[]{}`.
+
+### Possible Solutions
+
+For this problem, a Stack is a particularly efficient data structure to verify if the string has valid parentheses or not. The idea is to iterate through the input string, and for every character, we follow these rules:
+
+* If the character is an opening bracket (`(`, `[`, or `{`), we push it into the stack.
+* If the character is a closing bracket:
+  * If the stack is empty, we return false because there is no matching opening bracket for this closing bracket.
+  * If the top of the stack is the corresponding opening bracket, we pop it from the stack.
+  * If the top of the stack is not the corresponding opening bracket, we return false because the brackets are not correctly nested.
+* After the iteration, if the stack is not empty, it means that there are open brackets that were not closed, so we return false. If none of these two conditions are met, we return true.
+
+* **Time Complexity:** `O(n)`, where `n` is the length of the string. This is because we are doing a single pass through the string.
+* **Space Complexity:** `O(n)`, because in the worst-case scenario, all the characters in the string are open brackets, so we need to push all of them to the stack.
+
+### My Take in TypeScript
+
+```
+function isValid(s: string): boolean {
+    const stack = [];
+
+    for (const char of s.split('')) {
+        switch (char) {
+            case ')':
+                if (stack.pop() != '(')
+                    return false
+                break
+            case ']':
+                if (stack.pop() != '[')
+                    return false
+                break
+            case '}':
+                if (stack.pop() != '{')
+                    return false
+                break
+            default:
+                stack.push(char)
+        }
+    }
+
+    return stack.length == 0
+};
+```
+
+**Result:**
+
+- Runtime: 54 ms, beats **96.90%**.
+- Memory: 44.7 MB, beats **60.95%**.
