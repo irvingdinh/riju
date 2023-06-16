@@ -22,7 +22,7 @@ const articles = await Astro.glob<CuriosityFrontmatter>('./**/*.mdx')
 
     <div class="prose mt-4 dark:prose-invert">
       <ul>
-        {articles.map(article => (
+        {articles.reverse().map(article => (
           <li>
             <a href={article.url}>
               {article.frontmatter.title}
