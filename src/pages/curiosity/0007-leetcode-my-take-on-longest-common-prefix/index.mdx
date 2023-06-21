@@ -1,0 +1,65 @@
+---
+layout: src/components/layouts/CuriosityLayout/CuriosityLayout.astro
+title: 'LeetCode - My take on "Longest Common Prefix"'
+---
+
+### Description
+
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string `""`.
+
+**Example 1:**
+
+```
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+```
+
+**Example 2:**
+
+```
+Input: strs = ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+```
+
+**Constraints:**
+
+* `1 <= strs.length <= 200`
+* `0 <= strs[i].length <= 200`
+* `strs[i]` consists of only lowercase English letters.
+
+### Possible Solutions
+
+This problem presents several potential solutions, each with different time and space complexity trade-offs. The approach that leverages a map for counting frequencies and an array for sorting these counts would be the most balanced in terms of both time and space complexity.
+
+* Iterate through the array, incrementing the count of each element in a map.
+* Convert the keys in the map to an array.
+* Sort the keys in descending order based on their frequencies in the map.
+* Finally, slice the first `k` elements from the sorted array.
+
+* **Time Complexity:** `O(n log n)`, where `n` is the number of unique elements in the array. This is because we perform a sorting operation on the array of keys.
+* **Space Complexity:** `O(n)`, where `n` is the number of elements in the array. We store each element and its count in the Map and in the sorted array.
+
+### My Take in TypeScript
+
+```
+function topKFrequent(nums: number[], k: number): number[] {
+    const map = new Map<number, number>();
+    for (const num of nums) {
+        map.set(num, (map.get(num) || 0) + 1);
+    }
+
+    const sortedKeys = Array
+        .from(map.keys())
+        .sort((a, b) => map.get(b) - map.get(a));
+
+    return sortedKeys.slice(0, k);
+};
+```
+
+**Result:**
+
+- Runtime: 58 ms, beats **99.67%**.
+- Memory: 45.9 MB, beats **63.98%**.
