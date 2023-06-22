@@ -1,0 +1,64 @@
+---
+layout: src/components/layouts/CuriosityLayout/CuriosityLayout.astro
+title: 'LeetCode - My take on "Check If It Is a Straight Line"'
+---
+
+### Description
+
+You are given an array coordinates, coordinates[i] = [x, y], where [x, y] represents the coordinate of a point. Check if these points make a straight line in the XY plane.
+
+**Example 1:**
+
+```
+Input: coordinates = [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]
+Output: true
+```
+
+**Example 2:**
+
+```
+Input: coordinates = [[1,1],[2,2],[3,4],[4,5],[5,6],[7,7]]
+Output: false
+```
+
+**Constraints:**
+
+* `2 <= coordinates.length <= 1000`
+* `coordinates[i].length == 2`
+* `-10^4 <= coordinates[i][0], coordinates[i][1] <= 10^4`
+* `coordinates` contains no duplicate point.
+
+### Possible Solutions
+
+There are several possible ways to solve this problem, all the methods have the same time and space complexity of `O(n)` and `O(1)`.
+
+**Slope Comparison:** This approach involves calculating the slope between each pair of consecutive points and checking whether these slopes are equal.
+
+**Area of Triangle:** Calculate the area of the triangle formed by three points. If the area is zero for all possible triples of point, then they all lie on the same line.
+
+**Line Equation:** Calculate the line equation using the first two points, and then check if the all the other points satisfy this equation.
+
+### My Take in TypeScript
+
+```
+function checkStraightLine(coordinates: number[][]): boolean {
+    const dx = coordinates[1][0] - coordinates[0][0]
+    const dy = coordinates[1][1] - coordinates[0][1]
+
+    for (let i = 2; i < coordinates.length; i++) {
+        const currentDx = coordinates[i][0] - coordinates[i - 1][0]
+        const currentDy = coordinates[i][1] - coordinates[i - 1][1]
+
+        if ((dy * currentDx) != (dx * currentDy)) {
+            return false
+        }
+    }
+
+    return true
+};
+```
+
+**Result:**
+
+- Runtime: 70 ms, beats **44.22%**.
+- Memory: 44.8 MB, beats **66.84%**.
